@@ -4,16 +4,20 @@
   "description": "Experimenting with decorators for events",
   "main": "src/index.ts",
   "scripts": {
-    "test": "mocha --watch -r ts-node/register test/**/*.ts",
-    "watch": "mocha -r ts-node/register test/**/*.ts"
+    "test": "mocha -r jsdom-global/register -r ts-node/register test/**/*.ts",
+    "watch": "mocha --watch -r jsdom-global/register -r ts-node/register test/**/*.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/chai": "^4.1.6",
+    "@types/chai-spies": "^1.0.0",
     "@types/mocha": "^5.2.5",
     "chai": "^4.2.0",
+    "chai-spies": "^1.0.0",
+    "jsdom": "^12.1.0",
+    "jsdom-global": "^3.0.2",
     "mocha": "^5.2.0",
     "ts-node": "^7.0.1",
     "webpack": "^4.20.2",
