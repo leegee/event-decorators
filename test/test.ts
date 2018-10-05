@@ -10,18 +10,6 @@ const handleEventName = 'test-event-name-2';
 const documentQuerySelectorForListen = 'document';
 const documentQuerySelectorForHandle = 'document';
 
-class TestSubject {
-    @Listen(listenForEventName, documentQuerySelectorForListen)
-    listeningMember(){
-        spyListeningRan = true;
-    }
-
-    @Handle(handleEventName, documentQuerySelectorForListen)
-    handlingMember(){
-        spyHandlingRan = true;
-    }
-}
-
 describe('Init', () => {
     it('loads and exports', () => {
         expect(Testing.Listen).to.be.a('function');
@@ -29,6 +17,14 @@ describe('Init', () => {
 });
 
 describe('Listen', () => {
+
+    class TestSubject {
+        @Listen(listenForEventName, documentQuerySelectorForListen)
+        listeningMember() {
+            spyListeningRan = true;
+        }
+    }
+
     it('receives an event', () => {
         expect(spyListeningRan).to.be.false;
         const event = new CustomEvent(listenForEventName);
@@ -39,6 +35,13 @@ describe('Listen', () => {
 });
 
 describe('Handle', () => {
+    class TestSubject {
+        @Handle(handleEventName, documentQuerySelectorForListen)
+        handlingMember() {
+            spyHandlingRan = true;
+        }
+    }
+
     it('handles an event', () => {
         expect(spyHandlingRan).to.be.false;
         const event = new CustomEvent(handleEventName);
