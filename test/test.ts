@@ -1,16 +1,24 @@
 import 'mocha';
 import { expect } from 'chai';
 import * as Testing from '../src/';
-import { Listen } from '../src/';
+import { Listen, Handle } from '../src/';
 
-let spyRan = false;
-const eventName = 'test-event-name';
-const documentQuerySelector = 'document';
+let spyListeningRan = false;
+let spyHandlingRan = false;
+const listenForEventName = 'test-event-name';
+const handleEventName = 'test-event-name-2';
+const documentQuerySelectorForListen = 'document';
+const documentQuerySelectorForHandle = 'document';
 
 class TestSubject {
-    @Listen(eventName, documentQuerySelector)
+    @Listen(listenForEventName, documentQuerySelectorForListen)
     listeningMember(){
-        spyRan = true;
+        spyListeningRan = true;
+    }
+
+    @Handle(handleEventName, documentQuerySelectorForListen)
+    handlingMember(){
+        spyHandlingRan = true;
     }
 }
 
@@ -22,10 +30,20 @@ describe('Init', () => {
 
 describe('Listen', () => {
     it('receives an event', () => {
-        expect(spyRan).to.be.false;
-        const event = new CustomEvent(eventName);
+        expect(spyListeningRan).to.be.false;
+        const event = new CustomEvent(listenForEventName);
         const notCancelled = document.dispatchEvent(event);
         expect(notCancelled).to.be.true;
-        expect(spyRan).to.be.true;
+        expect(spyListeningRan).to.be.true;
+    });
+});
+
+describe('Handle', () => {
+    it('handles an event', () => {
+        expect(spyHandlingRan).to.be.false;
+        const event = new CustomEvent(handleEventName);
+        const notCancelled = document.dispatchEvent(event);
+        expect(notCancelled).to.be.true;
+        expect(spyHandlingRan).to.be.true;
     });
 });
