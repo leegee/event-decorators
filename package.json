@@ -1,5 +1,5 @@
 {
-  "name": "event-decorators-experiment",
+  "name": "event-decorators-ts-experiment",
   "version": "0.0.1",
   "description": "Experimenting with decorators for events",
   "main": "src/index.ts",
