@@ -5,11 +5,11 @@ import { Listen } from '../src/';
 
 let spyRan = false;
 const eventName = 'test-event-name';
+const documentQuerySelector = 'document';
 
 class TestSubject {
-    @Listen(eventName)
+    @Listen(eventName, documentQuerySelector)
     listeningMember(){
-        console.log('**************** listening member called');
         spyRan = true;
     }
 }
@@ -21,10 +21,6 @@ describe('Init', () => {
 });
 
 describe('Listen', () => {
-    const testSubjectFunc = () => {
-        console.log('enter test subject member');
-    }
-
     it('receives an event', () => {
         expect(spyRan).to.be.false;
         const event = new CustomEvent(eventName);

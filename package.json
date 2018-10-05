@@ -1,7 +1,7 @@
 {
   "name": "event-decorators-ts-experiment",
   "version": "0.0.1",
-  "description": "Experimenting with decorators for events",
+  "description": "Experimenting with decorators for events in Typescript",
   "main": "src/index.ts",
   "scripts": {
     "test": "mocha -r jsdom-global/register -r ts-node/register test/**/*.ts",

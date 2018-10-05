@@ -1,17 +1,12 @@
-// export function Listen(arg: string) {
-//     function f(target) {
-//         function ff(msg: string) {
-//             return new target(arg + ":" + msg)
-//         }
-//         return <typeof A><any>ff
-//     }
-//     return f
-// }
-
-export function Listen(eventName: string) {
+export function Listen(eventName: string, documentQuerySelector: string) {
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-        console.log('called ',eventName, target, propertyKey, descriptor    );
-        document.addEventListener(eventName, descriptor.value);
+        console.log('called ', eventName, target, propertyKey, descriptor);
+        const node = documentQuerySelector === 'document' ? document : document.querySelector(documentQuerySelector);
+        if (node === null) {
+            throw new Error('Could not find ' + documentQuerySelector + ' to attach listener for ' + eventName);
+        }
+        node!.addEventListener(eventName, descriptor.value);
         return descriptor;
     };
 }
+
