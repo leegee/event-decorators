@@ -4,7 +4,8 @@
   "description": "Experimenting with decorators for events",
   "main": "src/index.ts",
   "scripts": {
-    "test": "mocha -r ts-node/register test/**/*.ts"
+    "test": "mocha --watch -r ts-node/register test/**/*.ts",
+    "watch": "mocha -r ts-node/register test/**/*.ts"
   },
   "keywords": [],
   "author": "",
