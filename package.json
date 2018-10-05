@@ -1,0 +1,24 @@
+{
+  "name": "event-decorators-experiment",
+  "version": "0.0.1",
+  "description": "Experimenting with decorators for events",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "mocha -r ts-node/register test/**/*.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/chai": "^4.1.6",
+    "@types/mocha": "^5.2.5",
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "ts-node": "^7.0.1",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2"
+  },
+  "dependencies": {
+    "typescript": "^3.2.0-dev.20181004"
+  }
+}
