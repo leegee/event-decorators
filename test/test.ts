@@ -1,14 +1,7 @@
 import 'mocha';
 import { expect } from 'chai';
 import * as Testing from '../src/';
-import { Listen, Handle } from '../src/';
-
-let spyListeningRan = false;
-let spyHandlingRan = false;
-const listenForEventName = 'test-event-name';
-const handleEventName = 'test-event-name-2';
-const documentQuerySelectorForListen = 'document';
-const documentQuerySelectorForHandle = 'document';
+import { Listen } from '../src/';
 
 describe('Init', () => {
     it('loads and exports', () => {
@@ -16,37 +9,101 @@ describe('Init', () => {
     });
 });
 
-describe('Listen', () => {
+describe('Event from object "document"', () => {
+    const eventName = 'handle-event-document-object';
+    let spyHandlingRan = false;
 
     class TestSubject {
-        @Listen(listenForEventName, documentQuerySelectorForListen)
-        listeningMember() {
-            spyListeningRan = true;
-        }
-    }
-
-    it('receives an event', () => {
-        expect(spyListeningRan).to.be.false;
-        const event = new CustomEvent(listenForEventName);
-        const notCancelled = document.dispatchEvent(event);
-        expect(notCancelled).to.be.true;
-        expect(spyListeningRan).to.be.true;
-    });
-});
-
-describe('Handle', () => {
-    class TestSubject {
-        @Handle(handleEventName, documentQuerySelectorForListen)
+        @Listen(eventName, document)
         handlingMember() {
             spyHandlingRan = true;
         }
     }
 
-    it('handles an event', () => {
-        expect(spyHandlingRan).to.be.false;
-        const event = new CustomEvent(handleEventName);
-        const notCancelled = document.dispatchEvent(event);
+    it('handled', () => {
+        const notCancelled = document.dispatchEvent(new CustomEvent(eventName));
         expect(notCancelled).to.be.true;
         expect(spyHandlingRan).to.be.true;
     });
 });
+
+describe('Event from string "document"', () => {
+    const eventName = 'handle-event-document-string';
+    let spyHandlingRan = false;
+
+    class TestSubject {
+        @Listen(eventName, 'document')
+        handlingMember() {
+            spyHandlingRan = true;
+        }
+    }
+
+    it('handled', () => {
+        const notCancelled = document.dispatchEvent(new CustomEvent(eventName));
+        expect(notCancelled).to.be.true;
+        expect(spyHandlingRan).to.be.true;
+    });
+});
+
+describe('Event from object node', () => {
+    const node = document.createElement('div');
+    document.body.appendChild(node);
+    const eventName = 'handle-event-node-object';
+    let spyHandlingRan = false;
+
+    class TestSubject {
+        @Listen(eventName, node)
+        handlingMember() {
+            spyHandlingRan = true;
+        }
+    }
+
+    it('handled', () => {
+        const notCancelled = node.dispatchEvent(new CustomEvent(eventName));
+        expect(notCancelled).to.be.true;
+        expect(spyHandlingRan).to.be.true;
+    });
+});
+
+describe('Event from object node did not fire doc', () => {
+    const node = document.createElement('div');
+    document.body.appendChild(node);
+    const eventName = 'handle-event-node-object';
+    let spyHandlingRan = false;
+
+    class TestSubject {
+        @Listen(eventName, node)
+        handlingMember() {
+            spyHandlingRan = true;
+        }
+    }
+
+    it('handled', () => {
+        const notCancelled = document.dispatchEvent(new CustomEvent(eventName));
+        expect(notCancelled).to.be.true;
+        expect(spyHandlingRan).to.be.false;
+    });
+});
+
+describe('Event from string node', () => {
+    const node = document.createElement('div');
+    const nodeId = 'aNodeId';
+    node.setAttribute('id', nodeId);
+    document.body.appendChild(node);
+    const eventName = 'handle-event-node-string';
+    let spyHandlingRan = false;
+
+    class TestSubject {
+        @Listen(eventName, '#' + nodeId)
+        handlingMember() {
+            spyHandlingRan = true;
+        }
+    }
+
+    it('handled', () => {
+        const notCancelled = node.dispatchEvent(new CustomEvent(eventName));
+        expect(notCancelled).to.be.true;
+        expect(spyHandlingRan).to.be.true;
+    });
+});
+
